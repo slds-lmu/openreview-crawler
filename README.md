@@ -10,7 +10,7 @@ Install via GitHub (e.g., by putting `openreview-crawler @ git+https://github.co
 
 ## Example usage
 
-```
+```python
 from openreview_crawler.client import ORClient
 from openreview_crawler.utils import get_credentials, extract_papers, flag_keyword
 import re
@@ -20,14 +20,14 @@ import pandas as pd
 
 Get credentials and instantiate client
 
-```
+```python
 usr, pw = get_credentials()
 my_client = ORClient(usr, pw)
 ```
 
 Find out conference ID for, say, ICML 2023
 
-```
+```python
 print([x for x in my_client.get_venues() if 'ICML' in x and '2023' in x])
 # ...
 venue_id = 'ICML.cc/2023/Conference'
@@ -35,7 +35,7 @@ venue_id = 'ICML.cc/2023/Conference'
 
 Get accepted papers and extract relevant info
 
-```
+```python
 accepted = my_client.get_papers(venue_id, 'accepted')
 papers = extract_papers(accepted)
 ```
@@ -46,7 +46,7 @@ Keywords can be
 - OR constructions like *NN or neural network* :arrow_right: flag with 1 if either appears
 - AND constructions like *tuning and categorical* :arrow_right: flag if both appear
 
-```
+```python
 keywords = ['information theory', 'NN or neural network', 'tuning and categorical']
 for k in keywords:
     col = []
