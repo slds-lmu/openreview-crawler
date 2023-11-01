@@ -1,6 +1,7 @@
 """Utility functions."""
 import re
 
+import click
 import pandas as pd
 from nltk.stem.snowball import SnowballStemmer
 from openreview.api import Note
@@ -18,6 +19,17 @@ def extract_papers(papers: list[Note]) -> pd.DataFrame:
         rows.append([nr, title, authors, abstract, url])
     colnames = ['id', 'title', 'authors', 'abstract', 'url']
     return pd.DataFrame(rows, columns=colnames)
+
+
+def get_credentials() -> tuple:
+    """Prompt user for credentials via CLI."""
+    usr = click.prompt(
+        'Enter OpenReview username', hide_input=True, confirmation_prompt=True
+    )
+    pw = click.prompt(
+        'Enter OpenReview password', hide_input=True, confirmation_prompt=True
+    )
+    return usr, pw
 
 
 def flag_keyword(text: str, keyword: str) -> int:
