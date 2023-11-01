@@ -19,9 +19,9 @@ class ORClient:
             password=password,
         )
 
-    def print_venues(self) -> None:
+    def get_venues(self) -> list:
         """Print names of listed venues."""
-        print(self.client.get_group(id='venues').members)
+        return self.client.get_group(id='venues').members
 
     def get_papers(self, venue_id: str, status: str = 'all') -> list[Note]:
         """Get all submitted papers."""
