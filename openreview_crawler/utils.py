@@ -23,12 +23,8 @@ def extract_papers(papers: list[Note]) -> pd.DataFrame:
 
 def get_credentials() -> tuple:
     """Prompt user for credentials via CLI."""
-    usr = click.prompt(
-        'Enter OpenReview username', hide_input=True, confirmation_prompt=True
-    )
-    pw = click.prompt(
-        'Enter OpenReview password', hide_input=True, confirmation_prompt=True
-    )
+    usr = click.prompt('Enter OpenReview username', hide_input=False)
+    pw = click.prompt('Enter OpenReview password', hide_input=True)
     return usr, pw
 
 
