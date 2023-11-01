@@ -1,4 +1,4 @@
-# openreview-crawler
+# openreview_crawler
 
 Mini package to crawl submissions from OpenReview
 
