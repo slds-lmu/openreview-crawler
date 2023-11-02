@@ -36,12 +36,22 @@ def flag_keyword(text: str, keyword: str) -> int:
     text_clean = _clean_and_stem_text(text)
     if ' and ' in keyword_clean:
         keyword_list = re.split(' and ', keyword_clean)
-        is_match = all([k in text_clean for k in keyword_list])
+        is_match = all(
+            [
+                k in text_clean or _remove_whitespaces(k) in text_clean
+                for k in keyword_list
+            ]
+        )
     elif ' or ' in keyword_clean:
         keyword_list = re.split(' or ', keyword_clean)
-        is_match = any([k in text_clean for k in keyword_list])
+        is_match = any(
+            [
+                k in text_clean or _remove_whitespaces(k) in text_clean
+                for k in keyword_list
+            ]
+        )
     else:
-        is_match = keyword_clean in text_clean
+        is_match = keyword_clean or _remove_whitespaces(keyword_clean) in text_clean
     return int(is_match)
 
 
@@ -52,3 +62,8 @@ def _clean_and_stem_text(text: str) -> str:
     text = re.sub(r'[^\w\s]', '', text)
     text_stemmed = [stemmer.stem(x) for x in re.split(' ', text)]
     return ' '.join(x for x in text_stemmed)
+
+
+def _remove_whitespaces(text: str) -> str:
+    """Remove whitespaces from text."""
+    return re.sub(' +', '', text)
