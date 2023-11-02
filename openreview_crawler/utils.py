@@ -51,7 +51,10 @@ def flag_keyword(text: str, keyword: str) -> int:
             ]
         )
     else:
-        is_match = keyword_clean or _remove_whitespaces(keyword_clean) in text_clean
+        is_match = (
+            keyword_clean in text_clean
+            or _remove_whitespaces(keyword_clean) in text_clean
+        )
     return int(is_match)
 
 
