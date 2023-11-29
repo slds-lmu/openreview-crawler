@@ -34,28 +34,26 @@ def flag_keyword(text: str, keyword: str) -> int:
     text = text.lower()
     keyword_clean = _clean_and_stem_text(keyword)
     text_clean = _clean_and_stem_text(text)
-    if ' and ' in keyword_clean:
-        keyword_list = re.split(' and ', keyword_clean)
-        is_match = all(
-            [
-                k in text_clean or _remove_whitespaces(k) in text_clean
-                for k in keyword_list
-            ]
-        )
-    elif ' or ' in keyword_clean:
+    # OR combinations are handled first, incl. possible AND combinations within
+    if ' or ' in keyword_clean:
         keyword_list = re.split(' or ', keyword_clean)
-        is_match = any(
-            [
-                k in text_clean or _remove_whitespaces(k) in text_clean
-                for k in keyword_list
-            ]
-        )
+        matches = []
+        for kw in keyword_list:
+            if ' and ' in kw:
+                kw_list = re.split(' and ', kw)
+                is_match = _check_and_combinations(text_clean, kw_list)
+            else:
+                is_match = _check_single(text_clean, kw)
+            matches.append(int(is_match))
+        is_match_all = 1 if sum(matches) > 0 else 0
+    # Next, handle AND combinations without OR
+    elif ' and ' in keyword_clean:
+        keyword_list = re.split(' and ', keyword_clean)
+        is_match_all = int(_check_and_combinations(keyword_clean, keyword_list))
+    # Last, handle single-type keywords
     else:
-        is_match = (
-            keyword_clean in text_clean
-            or _remove_whitespaces(keyword_clean) in text_clean
-        )
-    return int(is_match)
+        is_match_all = int(_check_single(text_clean, keyword_clean))
+    return is_match_all
 
 
 def _clean_and_stem_text(text: str) -> str:
@@ -70,3 +68,11 @@ def _clean_and_stem_text(text: str) -> str:
 def _remove_whitespaces(text: str) -> str:
     """Remove whitespaces from text."""
     return re.sub(' +', '', text)
+
+
+def _check_and_combinations(text: str, keyword_list: list[str]) -> bool:
+    return all([k in text or _remove_whitespaces(k) in text for k in keyword_list])
+
+
+def _check_single(text: str, keyword: str) -> bool:
+    return any([keyword in text or _remove_whitespaces(keyword) in text])
