@@ -18,7 +18,7 @@ import os
 import pandas as pd
 ```
 
-Get credentials and instantiate client
+Prompt for credentials and instantiate client
 
 ```python
 usr, pw = get_credentials()
