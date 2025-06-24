@@ -10,6 +10,8 @@ Install via GitHub (e.g., by putting `openreview-crawler @ git+https://github.co
 
 ## Example usage
 
+💡 Easy way: copy notebook already using the crawler ➡️ e.g., [this one](https://github.com/slds-lmu/causalfairml-jc/blob/main/jc-13.ipynb)
+
 ```python
 from openreview_crawler.client import ORClient
 from openreview_crawler.utils import get_credentials, extract_papers, flag_keyword
