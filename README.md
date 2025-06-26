@@ -6,7 +6,7 @@ Mini package to crawl submissions from OpenReview
 
 Set up virtual environment of your choice.
 
-Install via GitHub (e.g., by putting `openreview-crawler @ git+https://github.com/lisa-wm/openreview-crawler` in your `requirements.txt` file).
+Install via GitHub (e.g., by putting `openreview-crawler @ git+https://github.com/slds-lmu/openreview-crawler` in your `requirements.txt` file).
 
 ## Example usage
 
